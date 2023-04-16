@@ -13,7 +13,7 @@ public class ProducerClient {
     public static void main(String[] args){
         int id;
         try(Socket socket = new Socket("localhost", 8000)){
-            System.out.println("Client connected");
+            System.out.println("Producer connected");
             OutputStream output = socket.getOutputStream();
             PrintWriter writer = new PrintWriter(output, true);
 
@@ -27,8 +27,9 @@ public class ProducerClient {
             //wait for signal to start
             fromServer = reader.readLine();
             System.out.println(fromServer);
-            int i = 500;
+            int i = id;
             while(i<500) {
+                System.out.println(fromServer);
                 if (fromServer.equals("RUN")) {
                     writer.println(Process.NUM_ITEMS);
                     System.out.println("Sent request");
@@ -48,7 +49,7 @@ public class ProducerClient {
 
         } catch (IOException ex) {
 
-            System.out.println("I/O error: " + ex.getMessage());
+            System.out.println("I/O error! " + ex.getMessage());
         }
 
     }

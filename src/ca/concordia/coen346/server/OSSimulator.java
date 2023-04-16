@@ -40,9 +40,9 @@ public class OSSimulator extends Thread{
     public void run(){
         while(true){
             //Schedule
-            System.out.println("Scheduling");
+            //System.out.println("Scheduling");
             Process client = schedule();
-            System.out.println(client);
+            //System.out.println(client);
             if(client != null) {
                 int result = client.run(1);
                 if (result == -1) {
