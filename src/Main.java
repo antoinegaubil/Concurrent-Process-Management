@@ -3,31 +3,15 @@ import ca.concordia.coen346.server.Buffer;
 public class Main {
     public static void main(String[] args) throws InterruptedException {
         Buffer buffer = new Buffer();
+
         Thread t1 = new Thread(() -> {
             for (int i = 0; i < 1000; i++) {
-                buffer.lock.lock();
-                try {
-                    int pos = buffer.getNextPosition();
-                    buffer.insertItem(i, pos);
-                    buffer.setIn((pos + 1) % Buffer.BUFFER_SIZE);
-                    buffer.readCount();
-                }
-                finally {
-                    buffer.lock.unlock();
-                }
+                buffer.produce(i);
             }
         });
         Thread t2 = new Thread(() -> {
            for (int i = 0; i < 1000; i++) {
-               buffer.lock.lock();
-               try {
-                   int pos = (buffer.getNextPosition() - 1 + Buffer.BUFFER_SIZE) % Buffer.BUFFER_SIZE;
-                   buffer.getNextItem(pos);
-                   buffer.readCount();
-               }
-               finally {
-                   buffer.lock.unlock();
-               }
+               buffer.consume();
            }
         });
         t1.start();
