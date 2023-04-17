@@ -33,7 +33,7 @@ public class OSSimulator extends Thread{
 
     public Process schedule(){
         //Select next process
-        currClient = 1 - currClient;
+        //currClient = 1 - currClient;
         return clients[currClient];
     }
 
